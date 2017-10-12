@@ -65,6 +65,7 @@ pipeline
 		{
 			steps
 			{
+				git 'file:///usr/demo/hello-test'
 				runCucumberTest 'demo', 'test'
 			}
 		}
