@@ -49,7 +49,14 @@ pipeline
 		{
 			steps
 			{
-				publishVersionToUrbanCode 'hello-service', 'hello-world', "${BUILD_NUMBER}", "${WORKSPACE}/hello-service/target"
+				script
+				{
+					def ucdconfig = new UrbanCodeConfiguration(UCD_SITE, UCD_URL, UCD_CREDENTIAL)
+					def component = new DeployComponent('hello-service', "${WORKSPACE}/hello-service/target")
+					def app = new DeployApplication('hello-world', 'Deploy all to Tomcat')
+					app.addComponentVersion(component, "${BUILD_NUMBER}")
+				}
+				publishVersionToUrbanCode ucdconfig, config, app.name, "${BUILD_NUMBER}"
 			}
 		}
 		
@@ -57,7 +64,7 @@ pipeline
 		{
 			steps
 			{
-				deployApplicationWithUrbanCode 'hello-service', 'hello-world', "${BUILD_NUMBER}", 'Dev', 'Deploy all to Tomcat'
+				deployApplicationWithUrbanCode ucdconfig, app, 'Dev'
 			}
 		}
 		
