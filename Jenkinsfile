@@ -33,8 +33,8 @@ pipeline
 	environment
 	{
 		UCDCONFIG = initializeUcdConfig('ucd_demo', 'https://ucd-server:8443', 'UCD-admin')
-		COMPONENT = new DeployComponent('hello-service', "${WORKSPACE}/hello-service/target")
-		APP = new DeployApplication('hello-world', 'Deploy all to Tomcat')
+		COMPONENT = initializeComponent('hello-service', "${WORKSPACE}/hello-service/target")
+		APP = initializeApplication('hello-world', 'Deploy all to Tomcat')
 	}
 
 	stages
