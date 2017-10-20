@@ -21,6 +21,10 @@ import publishVersionToUrbanCode
 import runCucumberTest
 import runMvn
 
+import com.icct.ucd.DeployApplication
+import com.icct.ucd.DeployComponent
+import com.icct.ucd.UrbanCodeConfiguration
+
 pipeline
 {
 	agent any
