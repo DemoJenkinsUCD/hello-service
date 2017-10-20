@@ -31,9 +31,9 @@ pipeline
 	
 	environment
 	{
-		UCD_SITE = 'ucd_demo'
-		UCD_URL = 'https://ucd-server:8443'
-		UCD_CREDENTIAL = 'UCD-admin'
+		UCDCONFIG = new UrbanCodeConfiguration('ucd_demo', 'https://ucd-server:8443', 'UCD-admin')
+		COMPONENT = new DeployComponent('hello-service', "${WORKSPACE}/hello-service/target")
+		APP = new DeployApplication('hello-world', 'Deploy all to Tomcat')
 	}
 
 	stages
@@ -55,12 +55,9 @@ pipeline
 			{
 				script
 				{
-					def ucdconfig = new UrbanCodeConfiguration(UCD_SITE, UCD_URL, UCD_CREDENTIAL)
-					def component = new DeployComponent('hello-service', "${WORKSPACE}/hello-service/target")
-					def app = new DeployApplication('hello-world', 'Deploy all to Tomcat')
-					app.addComponentVersion(component, "${BUILD_NUMBER}")
+					APP.addComponentVersion(COMPONENT, "${BUILD_NUMBER}")
 				}
-				publishVersionToUrbanCode ucdconfig, config, app.name, "${BUILD_NUMBER}"
+				publishVersionToUrbanCode UCDCONFIG, COMPONENT, APP.name, "${BUILD_NUMBER}"
 			}
 		}
 		
@@ -68,7 +65,7 @@ pipeline
 		{
 			steps
 			{
-				deployApplicationWithUrbanCode ucdconfig, app, 'Dev'
+				deployApplicationWithUrbanCode UCDCONFIG, APP, 'Dev'
 			}
 		}
 		
