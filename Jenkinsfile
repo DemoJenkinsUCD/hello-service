@@ -27,7 +27,7 @@ import com.icct.ucd.DeployComponent
 import com.icct.ucd.UrbanCodeConfiguration
 
 def UCDCONFIG = new UrbanCodeConfiguration('ucd_demo', 'https://ucd-server:8443', 'UCD-admin')
-def COMPONENT = new DeployComponent('hello-service', "${WORKSPACE}/hello-service/target")
+def COMPONENT = new DeployComponent('hello-service', "")
 def APP = new DeployApplication('hello-world', 'Deploy all to Tomcat')
 
 pipeline
@@ -53,6 +53,7 @@ pipeline
 			{
 				script
 				{
+					COMPONENT.artifactBasePath = "${WORKSPACE}/hello-service/target"
 					APP.addComponentVersion(COMPONENT, "${BUILD_NUMBER}")
 				}
 				publishVersionToUrbanCode UCDCONFIG, COMPONENT, APP.name, "${BUILD_NUMBER}"
