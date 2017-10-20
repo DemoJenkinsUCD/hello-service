@@ -81,7 +81,7 @@ pipeline
 		{
 			steps
 			{
-				createApplicationSnapshotInUrbanCode 'hello-world', 'Dev', "hello.service${BUILD_NUMBER}"
+				createApplicationSnapshotInUrbanCode UCDCONFIG, APP.name, 'Dev', "hello.service${BUILD_NUMBER}"
 			}
 		}
 	}
