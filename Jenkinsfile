@@ -26,17 +26,14 @@ import com.icct.ucd.DeployApplication
 import com.icct.ucd.DeployComponent
 import com.icct.ucd.UrbanCodeConfiguration
 
+def UCDCONFIG = new UrbanCodeConfiguration('ucd_demo', 'https://ucd-server:8443', 'UCD-admin')
+def COMPONENT = new DeployComponent('hello-service', "${WORKSPACE}/hello-service/target")
+def APP = new DeployApplication('hello-world', 'Deploy all to Tomcat')
+
 pipeline
 {
 	agent any
 	
-	environment
-	{
-		UCDCONFIG = initializeUcdConfig('ucd_demo', 'https://ucd-server:8443', 'UCD-admin')
-		COMPONENT = initializeComponent('hello-service', "${WORKSPACE}/hello-service/target")
-		APP = initializeApplication('hello-world', 'Deploy all to Tomcat')
-	}
-
 	stages
 	{
 		stage('Build')
