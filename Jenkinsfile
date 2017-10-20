@@ -17,6 +17,7 @@
 @Library('ucd_demo')
 import createApplicationSnapshotInUrbanCode
 import deployApplicationWithUrbanCode
+import initializeUcdConfig
 import publishVersionToUrbanCode
 import runCucumberTest
 import runMvn
@@ -31,7 +32,7 @@ pipeline
 	
 	environment
 	{
-		UCDCONFIG = new UrbanCodeConfiguration('ucd_demo', 'https://ucd-server:8443', 'UCD-admin')
+		UCDCONFIG = initializeUcdConfig('ucd_demo', 'https://ucd-server:8443', 'UCD-admin')
 		COMPONENT = new DeployComponent('hello-service', "${WORKSPACE}/hello-service/target")
 		APP = new DeployApplication('hello-world', 'Deploy all to Tomcat')
 	}
